@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Time Since I Was Born</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      text-align: center;
+      padding: 30px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    .box {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 20px 0;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    }
+    .label {
+      font-size: 1.4rem;
+      font-weight: 400;
+    }
+    .value {
+      font-weight: bold;
+      font-size: 2rem;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="box"><div class="label">I was born <span class="value" id="years">...</span> years ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="months">...</span> months ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="weeks">...</span> weeks ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="days">...</span> days ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="hours">...</span> hours ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="minutes">...</span> minutes ago</div></div>
+    <div class="box"><div class="label">I was born <span class="value" id="seconds">...</span> seconds ago</div></div>
+  </div>
+
+  <script>
+    const birthEpoch = 1151946000; // July 3rd, 2006 00:00:00 UTC
+    const birthDate = new Date(birthEpoch * 1000);
+
+    function updateAge() {
+      const now = new Date();
+      const diffMs = now - birthDate;
+      const diffSec = diffMs / 1000;
+      const diffMin = diffSec / 60;
+      const diffHr = diffMin / 60;
+      const diffDays = diffHr / 24;
+      const diffWeeks = diffDays / 7;
+      const diffMonths = diffDays / 30.44; // average
+      const diffYears = diffDays / 365.25; // average year
+
+      document.getElementById('seconds').textContent = Math.floor(diffSec).toLocaleString();
+      document.getElementById('minutes').textContent = Math.floor(diffMin).toLocaleString();
+      document.getElementById('hours').textContent = Math.floor(diffHr).toLocaleString();
+      document.getElementById('days').textContent = Math.floor(diffDays).toLocaleString();
+      document.getElementById('weeks').textContent = Math.floor(diffWeeks).toLocaleString();
+      document.getElementById('months').textContent = Math.floor(diffMonths).toLocaleString();
+      document.getElementById('years').textContent = diffYears.toFixed(9).replace(/\.?0+$/, '');
+    }
+
+    updateAge();
+    setInterval(updateAge, 1000);
+  </script>
+</body>
+</html>
